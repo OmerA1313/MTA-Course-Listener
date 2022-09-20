@@ -4,20 +4,19 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 import playsound
 from selenium.webdriver.common.keys import Keys
-
-import MailSender
 import PushNotifier
-import SMSSender
-message = ""
+
+
 course_code_2name = {'145006': "Project Management",
                      '141161': "System Analysis",
                      '142209': "Value Creation",
                      '141163': "Astrophysics",
                      '11126' : "Test: course available"}
+message = ""
 
 try:
     course_code = sys.argv[1]
-    PATH = "C:\Program Files (x86)\chromedriver.exe"
+    PATH = "resources/chromedriver.exe"
     driver = webdriver.Chrome(PATH)
     driver.get("https://mtamn.mta.ac.il")
     driver.maximize_window()
@@ -65,9 +64,6 @@ except Exception as err:
     print(err)
 
 finally:
-    #while(True):
-            #playsound.playsound("alarm.mp3")
-    #SMSSender.send_SMS(sms_message)
     if message == "":
         message = f"process {course_code_2name.get(course_code)} terminated"
     PushNotifier.send_push(message)
